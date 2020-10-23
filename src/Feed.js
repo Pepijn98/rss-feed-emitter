@@ -155,6 +155,7 @@ class Feed {
       const feedparser = new FeedParser();
       feedparser.on('readable', () => {
         const item = feedparser.read();
+        if (!item) return; // Every single rss feed I tried threw an "invalid_feed" error even though there's nothing wrong with the feed, this fixes it.
         item.meta.link = this.url;
         items.push(item);
       });
